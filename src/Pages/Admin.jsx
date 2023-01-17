@@ -3,6 +3,13 @@ import {
   Box,
   Button,
   Heading,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverCloseButton,
+  PopoverContent,
+  PopoverHeader,
+  PopoverTrigger,
   Table,
   TableCaption,
   Tbody,
@@ -62,12 +69,14 @@ const Admin = () => {
 
   const DeleteUserConfirmation = (data) => {
     setDeleteUserData(data);
+    
   };
 
   // *deleting the users
   const DeleteUser = () => {
     const item = deleteUserData;
     deleteDoc(doc(db, "users", item.id)).then(() => {
+        
       alert(`${item.email} has been deleted.`, "success");
     });
   };
@@ -75,7 +84,20 @@ const Admin = () => {
     <>
        
       <Box>
-        <button onClick={DeleteUser}>del</button>
+        
+        <Popover>
+  <PopoverTrigger>
+    <Button>Trigger</Button>
+  </PopoverTrigger>
+  <PopoverContent>
+    <PopoverArrow />
+    <PopoverCloseButton />
+    <PopoverHeader>Confirmation!</PopoverHeader>
+    <PopoverBody>Are you sure you want delet this user?
+        <Button onClick={DeleteUser}>delete</Button>
+    </PopoverBody>
+  </PopoverContent>
+</Popover>
         <Heading textAlign={"center"} padding="5">
           Users
         </Heading>
@@ -87,6 +109,8 @@ const Admin = () => {
               <Th color={"white"}>User Id</Th>
               <Th color={"white"}>User name</Th>
               <Th color={"white"}>User Email</Th>
+              <Th color={"white"}>Phone Number</Th>
+              <Th color={"white"}>Gender</Th>
               <Th color={"white"}>Delete User</Th>
             </Tr>
           </Thead>
@@ -98,7 +122,8 @@ const Admin = () => {
                   <Td opacity={".7"}>{data.id}</Td>
                   <Td>{data.displayName}</Td>
                   <Td>{data.email}</Td>
-                 
+                 <Td>{data.phone}</Td>
+                 <Td>{data.genderDetails}</Td>
                   
                   <Td>
                     <Button

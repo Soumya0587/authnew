@@ -16,7 +16,7 @@ const signInWithGoogle =async () => {
         console.log("email: ", email);
 
         const UserCollectionRef = doc(db, "users", user.uid);
-        await setDoc(UserCollectionRef, { email, googleAuth:true });
+        await setDoc(UserCollectionRef, { email,name, googleAuth:true });
    }
    catch(e){
     console.log(e)
@@ -33,11 +33,13 @@ const signInWithGoogle =async () => {
 const Login = () => {
     const [emailSignIn, setEmailSignIn] = useState("");
     const [passwordSignIn, setPasswordSignIn] = useState("");
+    
 
     const SignIn = async () => {
         try {
           const email = emailSignIn;
           const password = passwordSignIn;
+          
           const userCredential = await signInWithEmailAndPassword(
             auth,
             email,

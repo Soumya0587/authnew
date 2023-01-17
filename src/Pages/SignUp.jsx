@@ -8,23 +8,29 @@ const SignUp = () => {
     const [emailSignUp, setEmailSignUp] = useState("");
     const [passwordSignUp, setPasswordSignUp] = useState("");
     const [displayNameSignUp, setdisplayNameSignUp] = useState("");
+    const [Phonenumber, setPhonenumber] = useState("");
+    const [gender, setgender] = useState("");
     
     const SignUpFunc=async()=>{
         try {
             const email = emailSignUp;
             const password = passwordSignUp;
             const displayName=displayNameSignUp
+            const phone=Phonenumber
+            const genderDetails=gender
             const userCredential = await createUserWithEmailAndPassword(
               auth,
               email,
               password,
-              displayName
+              displayName,
+              phone,
+              genderDetails,
             );
             const user = userCredential.user;
       
             // * Storing the details of user inside of our firebase database;
             const UserCollectionRef = doc(db, "users", user.uid);
-            await setDoc(UserCollectionRef, { email, password,displayName });
+            await setDoc(UserCollectionRef, { email, password,displayName,phone,genderDetails });
       
             setEmailSignUp("");
             setPasswordSignUp("");
@@ -44,6 +50,22 @@ const SignUp = () => {
           value={displayNameSignUp}
           my="2"
           onChange={(e) => setdisplayNameSignUp(e.target.value)}
+        />
+        <br />
+        <Input
+          type="text"
+          placeholder="phone number"
+          value={Phonenumber}
+          my="2"
+          onChange={(e) => setPhonenumber(e.target.value)}
+        />
+        <br />
+        <Input
+          type="text"
+          placeholder="gender"
+          value={gender}
+          my="2"
+          onChange={(e) => setgender(e.target.value)}
         />
         <Input
           type="email"
